@@ -10,8 +10,9 @@ import colors from "../config/colors";
 
 import { AppText, Text, Screen, Card, SortingUI } from "../components/index";
 
+import { RootState } from "../types/root";
 import { addCartItem } from "../store/actions/cartActions";
-import { sortProducts } from "../store/actions/productActions";
+import { sortProducts, setProductState } from "../store/actions/productActions";
 
 const ListingsScreen = ({ navigation }: any) => {
   const dispatch = useDispatch();
@@ -19,8 +20,7 @@ const ListingsScreen = ({ navigation }: any) => {
   //   "state=>",
   //   useSelector((state) => state)
   // );
-  const productState = useSelector((state) => state.product);
-  // const cartState = useSelector((state) => state.cart);
+  const productState = useSelector((state: RootState) => state.product);
 
   const getListingsApi = useApi(
     listingsApi.getListings as unknown as () => Promise<{
@@ -34,6 +34,7 @@ const ListingsScreen = ({ navigation }: any) => {
   }, []);
 
   productState.items = getListingsApi.data;
+  dispatch(setProductState(productState));
 
   const [searchText, setSearchText] = useState("");
   const [products, setProducts] = useState<Array<Product>>(productState.items);

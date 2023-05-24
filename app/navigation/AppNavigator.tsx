@@ -43,7 +43,7 @@ const AppNavigator = () => {
         name="Cart"
         component={CartNavigator}
         options={{
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ color, size }: styleProps) => (
             <View>
               <MaterialCommunityIcons name="home" color={color} size={size} />
               <View

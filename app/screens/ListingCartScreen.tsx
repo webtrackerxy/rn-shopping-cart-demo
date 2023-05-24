@@ -6,6 +6,7 @@ import { StyleSheet, View, ScrollView, Text } from "react-native";
 import colors from "../config/colors";
 import { Card, Screen } from "../components/index";
 import { Product } from "../types/product";
+import { RootState } from "../types/root";
 import {
   addCartItem as addItem,
   removeCartItem as removeItem,
@@ -14,7 +15,7 @@ import {
 
 const ListingCartScreen = ({ navigation }: { navigation: any }) => {
   const dispatch = useDispatch();
-  const cartState = useSelector((state) => state.cart);
+  const cartState = useSelector((state: RootState) => state.cart);
 
   const addCartItem = (product: Product) => dispatch(addItem(product, false));
   const removeCartItem = (product: Product) => dispatch(removeItem(product));
@@ -40,7 +41,7 @@ const ListingCartScreen = ({ navigation }: { navigation: any }) => {
       </ScrollView>
       <View style={styles.detailsContainer}>
         <Text style={styles.price}>
-          Total: £{cartState.totalCost.toFixed(1)}
+          Total: £{cartState.totalCost.toFixed(2)}
         </Text>
       </View>
     </Screen>

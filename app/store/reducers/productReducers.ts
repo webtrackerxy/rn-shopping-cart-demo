@@ -24,36 +24,36 @@ export const productReducer = (state = initialProductState, action:any) => {
       // logic for sorting products
       console.log("SORT_PRODUCTS", action.payload.sortType, action.payload.ordering)
 
-      if (!action.payload.sortType) action.payload.sortType="price";
-      if (!action.payload.ordering) action.payload.ordering="descending";
+      const sortType:string =  !action.payload?.sortType ? "price": action.payload.sortType;
+      const ordering:string =  !action.payload?.ordering ? "descending" : action.payload.ordering
 
       if (
         !(
-          action.payload.sortType === "title" ||
-          action.payload.sortType === "price" ||
-          action.payload.sortType === "rating"
+          sortType === "title" ||
+          sortType === "price" ||
+          sortType === "rating"
         ) ||
-        !(action.payload.ordering === "ascending" || action.payload.ordering === "descending")
+        !(ordering === "ascending" || ordering === "descending")
       ) {
-        console.log("Invalid sortType or order");
+        console.log("Invalid sortType or order",sortType,ordering );
         return;
       }
   
-      let sortedProducts = state.items.sort((a, b) => {
-        let valA =
-        action.payload.sortType === "rating"
-            ? a[action.payload.sortType].rate
-            : action.payload.sortType === "price"
-            ? a[action.payload.sortType]
-            : a[action.payload.sortType].toUpperCase();
-        let valB =
-        action.payload.sortType === "rating"
-            ? b[action.payload.sortType].rate
-            : action.payload.sortType === "price"
-            ? b[action.payload.sortType]
-            : b[action.payload.sortType].toUpperCase();
+      const sortedProducts = state.items.sort((a, b) => {
+        const valA =
+        sortType === "rating"
+            ? a[sortType].rate
+            : sortType === "price"
+            ? a[sortType]
+            : a[sortType].toUpperCase();
+        const valB =
+        sortType === "rating"
+            ? b[sortType].rate
+            : sortType === "price"
+            ? b[sortType]
+            : b[sortType].toUpperCase();
   
-        if (action.payload.ordering === "ascending") {
+        if (ordering === "ascending") {
           return valA > valB ? 1 : valA < valB ? -1 : 0;
         } else {
           return valA < valB ? 1 : valA > valB ? -1 : 0;
