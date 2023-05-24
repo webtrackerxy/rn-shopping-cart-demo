@@ -1,5 +1,7 @@
-import React, { useEffect, useContext, useState } from "react";
+// ListingScreen.tsx
+import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, TextInput, View, Button } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 import useApi from "../hooks/useApi";
 import listingsApi from "../api/listings";
@@ -8,12 +10,17 @@ import colors from "../config/colors";
 
 import { AppText, Text, Screen, Card, SortingUI } from "../components/index";
 
-import { ProductContext } from "../contexts/ProductContext";
-import { CartContext } from "../contexts/CartContext";
+import { addCartItem } from "../store/actions/cartActions";
+import { sortProducts } from "../store/actions/productActions";
 
 const ListingsScreen = ({ navigation }: any) => {
-  const { productState, sortProducts } = useContext(ProductContext);
-  const { addCartItem } = useContext(CartContext);
+  const dispatch = useDispatch();
+  // console.log(
+  //   "state=>",
+  //   useSelector((state) => state)
+  // );
+  const productState = useSelector((state) => state.product);
+  // const cartState = useSelector((state) => state.cart);
 
   const getListingsApi = useApi(
     listingsApi.getListings as unknown as () => Promise<{
@@ -37,7 +44,7 @@ const ListingsScreen = ({ navigation }: any) => {
 
   const searchTextFunction = () => {
     setProducts(
-      productState.items.filter((item) =>
+      productState.items.filter((item: Product) =>
         item.title.toLowerCase().includes(searchText.toLowerCase())
       )
     );
@@ -66,7 +73,11 @@ const ListingsScreen = ({ navigation }: any) => {
             placeholder="SanDisk"
             value={searchText}
           />
-          <SortingUI sortFunc={sortProducts} />
+          <SortingUI
+            sortFunc={(sortType: string, ordering: string) =>
+              dispatch(sortProducts(sortType, ordering))
+            }
+          />
         </View>
         <FlatList
           data={searchText.length > 0 ? products : productState.items}
@@ -78,7 +89,7 @@ const ListingsScreen = ({ navigation }: any) => {
                 type="listProduct"
                 subTitle={"£" + item.price}
                 onPress={() => navigation.navigate("ListingDetails", item)}
-                addToCart={() => addCartItem(item, false)}
+                addToCart={() => dispatch(addCartItem(item, false))}
               />
             </View>
           )}

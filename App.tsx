@@ -1,17 +1,19 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
+import { Provider } from "react-redux";
+import { store } from "./app/store";
+import ListingsScreen from "./app/screens/ListingsScreen";
 import AppNavigator from "./app/navigation/AppNavigator";
-import { CartContextProvider } from "./app/contexts/CartContext";
-import { ProductContextProvider } from "./app/contexts/ProductContext";
 
-export default function App() {
+const App = () => {
   return (
-    <ProductContextProvider>
-      <CartContextProvider>
-        <NavigationContainer>
-          <AppNavigator />
-        </NavigationContainer>
-      </CartContextProvider>
-    </ProductContextProvider>
+    <Provider store={store}>
+      {/* <ListingsScreen /> */}
+      <NavigationContainer>
+        <AppNavigator />
+      </NavigationContainer>
+    </Provider>
   );
-}
+};
+
+export default App;

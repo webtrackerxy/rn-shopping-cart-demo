@@ -1,0 +1,12 @@
+// Action types
+// Product
+export const SET_PRODUCT_STATE = "SET_PRODUCT_STATE";
+export const SORT_PRODUCTS = "SORT_PRODUCTS";
+
+// Cart 
+export const ADD_CART_ITEM = "ADD_CART_ITEM";
+export const REMOVE_CART_ITEM = "REMOVE_CART_ITEM";
+export const REMOVE_ALL_CART_ITEMS = "REMOVE_ALL_CART_ITEMS";
+export const CALCULATE_TOTAL_COST = "CALCULATE_TOTAL_COST";
+export const CALCULATE_TOTAL_COUNT = "CALCULATE_TOTAL_COUNT";
+

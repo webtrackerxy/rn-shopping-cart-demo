@@ -1,4 +1,4 @@
-
+// product.ts
 export interface Rating {
     rate: number;
     count: number;
@@ -19,7 +19,8 @@ export interface ProductState {
     items: Product[];
     search_text: string;
 }
-  
+
+// used by Context only
 export interface ProductContextValue {
     productState: ProductState;
     setProductState: React.Dispatch<React.SetStateAction<ProductState>>;

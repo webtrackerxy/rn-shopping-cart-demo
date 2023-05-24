@@ -1,3 +1,4 @@
+// useApi.ts
 import { useState } from "react";
 
 type ApiFuncProp = (...args: any[]) => Promise<{ok: boolean, data: any}>;

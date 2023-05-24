@@ -1,40 +1,42 @@
-import React, { useContext } from "react";
+// ListingCartScreen.tsx
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { StyleSheet, View, ScrollView, Text } from "react-native";
 
 import colors from "../config/colors";
-import {Card, Screen} from "../components/index";
-import { CartContext } from "../contexts/CartContext";
+import { Card, Screen } from "../components/index";
+import { Product } from "../types/product";
+import {
+  addCartItem as addItem,
+  removeCartItem as removeItem,
+  removeAllCartItems as removeAllItems,
+} from "../store/actions/cartActions";
 
-const ListingCartScreen = ({
-  navigation,
-}: {
-  navigation: any;
-}) => {
-  const { cartState, addCartItem, removeCartItem, removeAllCartItem } =
-    useContext(CartContext);
+const ListingCartScreen = ({ navigation }: { navigation: any }) => {
+  const dispatch = useDispatch();
+  const cartState = useSelector((state) => state.cart);
+
+  const addCartItem = (product: Product) => dispatch(addItem(product, false));
+  const removeCartItem = (product: Product) => dispatch(removeItem(product));
+  const removeAllCartItem = (product: Product) =>
+    dispatch(removeAllItems(product));
 
   return (
     <Screen style={styles.screen}>
       <ScrollView>
-        {cartState.items.map((item, i) => {
-          // Log the current item
-          // console.log(`Item at index ${i}:`, item);
-          return (
-            <Card
-              product={item.product}
-              type="listCard"
-              key={i}
-              qty={item.count}
-              subTotal={Number(item.cost)}
-              onPress={() =>
-                navigation.navigate("ListingDetails", item.product)
-              }
-              addToCart={() => addCartItem(item.product)}
-              reduceCart={() => removeCartItem(item.product)}
-              removeCart={() => removeAllCartItem(item.product)}
-            />
-          );
-        })}
+        {cartState.items.map((item, i) => (
+          <Card
+            product={item.product}
+            type="listCard"
+            key={i}
+            qty={item.count}
+            subTotal={Number(item.cost)}
+            onPress={() => navigation.navigate("ListingDetails", item.product)}
+            addToCart={() => addCartItem(item.product)}
+            reduceCart={() => removeCartItem(item.product)}
+            removeCart={() => removeAllCartItem(item.product)}
+          />
+        ))}
       </ScrollView>
       <View style={styles.detailsContainer}>
         <Text style={styles.price}>

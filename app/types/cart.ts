@@ -1,3 +1,4 @@
+// cart.ts
 import {Product} from "./product"
 
 export interface CartItem {
@@ -10,7 +11,8 @@ export interface CartState {
     items: CartItem[];
     totalCost: number;
 }
-  
+ 
+// used by Context only
 export  interface CartContextValue {
     cartState: CartState;
     addCartItem: (product: Product, alert?: boolean) => void;

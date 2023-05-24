@@ -1,15 +1,20 @@
-import React, { useContext } from "react";
+// ListingDetailsScreen
+import React from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
 import { Image } from "react-native-expo-image-cache";
+import { useDispatch } from "react-redux";
 
+import { Product } from "../types/product";
 import colors from "../config/colors";
 import { AppButton, RatingUI, Text } from "../components/index";
-import { CartContext } from "../contexts/CartContext";
+import { addCartItem as addItem } from "../store/actions/cartActions";
 
 function ListingDetailsScreen({ route }: any) {
   const listing = route.params;
-  const { addCartItem } = useContext(CartContext);
-  // console.log("ListingDetailsScreen", listing);
+  const dispatch = useDispatch();
+
+  const addCartItem = (product: Product, alert: boolean) =>
+    dispatch(addItem(product, alert));
 
   return (
     <ScrollView>
@@ -21,7 +26,7 @@ function ListingDetailsScreen({ route }: any) {
           uri={listing.image}
         />
         <Text style={styles.title}>{listing.title}</Text>
-        <Text style={styles.subTitle}>{listing.description} </Text>
+        <Text style={styles.subTitle}>{listing.description}</Text>
         <Text style={styles.price}>£{listing.price}</Text>
         <View>
           <RatingUI

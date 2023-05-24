@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+//AppNavigator.tsx
+import React, { useContext, useState } from "react";
 import { View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -6,7 +7,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import CartNavigator from "./CartNavigator";
 import ProductNavigator from "./ProductNavigator";
 
-import { CartContext } from "../contexts/CartContext";
+import { CartItem, CartState } from "../types/cart";
+import { useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 
@@ -15,7 +17,17 @@ interface styleProps {
   size: number;
 }
 const AppNavigator = () => {
-  const { calculateTotalCount } = useContext(CartContext);
+  const cartState = useSelector((state) => state.cart);
+
+  const calculateTotalCount = (cart: CartState): number => {
+    let totalCount = 0;
+    cartState.items.map((obj: CartItem) => {
+      totalCount += obj.count;
+    });
+
+    return totalCount;
+  };
+
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -56,7 +68,7 @@ const AppNavigator = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  {calculateTotalCount()}
+                  {calculateTotalCount(cartState)}
                 </Text>
               </View>
             </View>
