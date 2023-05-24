@@ -5,7 +5,7 @@ Demo code for react native shopping cart
 <img src="./screen.jpeg" width="300" height="30%">
 
 Install Expo Go in your phone, open following link<br>
-https://expo.dev/@webtrackerxyz/demornapp
+https://expo.dev/@webtrackerxyz/ShoppingApp
 
 Tested environment: <br>
 Nodejs: v16.11.1 <br>
