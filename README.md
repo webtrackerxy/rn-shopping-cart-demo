@@ -14,7 +14,7 @@ react native: 0.71.8 <br>
 
 // Functions
 
-1. get JSON FROM hhttps://fakestoreapi.com/products
+1. get JSON FROM <a href='https://fakestoreapi.com/products'>https://fakestoreapi.com/products</a>
 2. List the items by state
 3. Search products -> filter the products by product name
 4. Sort products by name, rating and price
